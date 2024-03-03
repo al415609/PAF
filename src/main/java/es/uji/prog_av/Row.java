@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Row{
     private List<Double> lista;
-    private int n;
 
     public Row(List<Double> lista){
         this.lista = lista;
@@ -12,5 +11,9 @@ public class Row{
 
     public List<Double> getData(){
         return lista;
+    }
+
+    public int tamaño(){
+        return lista.size();
     }
 }

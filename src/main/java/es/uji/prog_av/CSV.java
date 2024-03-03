@@ -12,7 +12,10 @@ public class CSV {
         int i = 0;
         while((line = br.readLine()) != null){
             if( i == 0){
-                t.addHeader(List.of(line));
+                String[] s1 = line.split(",");
+                for(String s2 : s1){
+                    t.addHeader(s2);
+                }
                 i++;
             } else {
                 String[] datos = line.split(",");
@@ -33,7 +36,10 @@ public class CSV {
         int i = 0;
         while((line = br1.readLine()) != null){
             if(i == 0){
-                t1.addHeader(List.of(line));
+                String[] s1 = line.split(",");
+                for(String s2 : s1){
+                    t1.addHeader(s2);
+                }
                 i++;
             } else {
                 String[] datos = line.split(",");

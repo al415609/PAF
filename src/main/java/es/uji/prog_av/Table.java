@@ -6,11 +6,11 @@ import java.util.List;
 
 public class Table {
 
-    private List<String> cabecera;
+    private List<String> cabecera = new ArrayList<>();
     private List<Row> datos = new ArrayList<>();
 
-    public void addHeader(List<String> headers){
-        this.cabecera = headers;
+    public void addHeader(String headers){
+        this.cabecera.add(headers);
     }
     public List<String> getHeaders(){
         return cabecera;
@@ -20,5 +20,11 @@ public class Table {
     }
     public Row getRowAt(int rowNumber){
         return datos.get(rowNumber);
+    }
+    public int n_filas(){
+        return datos.size();
+    }
+    public int n_columnas(){
+        return datos.get(1).tamaño();
     }
 }

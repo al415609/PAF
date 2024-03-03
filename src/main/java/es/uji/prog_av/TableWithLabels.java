@@ -10,12 +10,20 @@ public class TableWithLabels extends Table{
     private List<RowWithLabel> datos1 = new ArrayList<>();
 
     public void addRowWithLabels(List<Double> l, String s){
-        if(!this.labelsToIndex.containsKey(s)){
+        if(!this.labelsToIndex.){
             this.labelsToIndex.put(s,labelsToIndex.size());
             this.datos1.add(new RowWithLabel(l, labelsToIndex.get(s)));
         }
     }
 
+    @Override
+    public int n_filas() {
+        return datos1.size();
+    }
+    @Override
+    public int n_columnas(){
+        return datos1.get(1).tamaño() + 1;
+    }
 
     public RowWithLabel getRowAt(int rowNumber){
         return datos1.get(rowNumber);
