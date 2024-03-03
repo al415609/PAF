@@ -3,6 +3,7 @@ package es.uji.prog_av;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +57,20 @@ class KNNTest {
         System.out.println("Esperado: " + d1);
         System.out.println("Actual: " + String.format(Locale.US,"%.3f",s.distance(l3, l4)));
         assertEquals(String.format(Locale.US, "%.3f", d1), String.format(Locale.US, "%.3f",s.distance(l3, l4)), "Fallo en el calculo de la distancia");
-
+        System.out.println(" ");
+        System.out.println("Test de la funcion estimate");
+        System.out.println("Esperado: " + 107);
+        System.out.println("Actual: " + s.estimate(l1));
+        assertEquals(107, s.estimate(l1), "Error en la funcion estimate");
+        System.out.println(" ");
+        System.out.println("Test de la funcion estimate");
+        System.out.println("Esperado: " + 44);
+        System.out.println("Actual: " + s.estimate(l2));
+        assertEquals(44, s.estimate(l2), "Error en la funcion estimate");
+        System.out.println(" ");
+        System.out.println("Test de la funcion estimate");
+        System.out.println("Esperado: " + 1);
+        System.out.println("Actual: " + s.estimate(l3));
+        assertEquals(1, s.estimate(l3), "Error en la funcion estimate");
     }
 }

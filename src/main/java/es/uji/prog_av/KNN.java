@@ -14,6 +14,7 @@ public class KNN {
 
    public int estimate(List<Double> data){
         double c;
+        minimo = 100D;
         for(int i = 0; i<datos.n_filas(); i++){
             c = distance(datos.getRowAt(i).getData(), data);
             if(c < minimo){
