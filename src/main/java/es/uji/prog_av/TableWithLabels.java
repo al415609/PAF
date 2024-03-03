@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 public class TableWithLabels extends Table{
-    private Map<String, Integer> labelsToIndex = new HashMap<>();
+    private Map<Integer, String> labelsToIndex = new HashMap<>();
     private List<RowWithLabel> datos1 = new ArrayList<>();
 
     public void addRowWithLabels(List<Double> l, String s){
-        if(!this.labelsToIndex.){
-            this.labelsToIndex.put(s,labelsToIndex.size());
-            this.datos1.add(new RowWithLabel(l, labelsToIndex.get(s)));
+        if(this.labelsToIndex.put(labelsToIndex.size(),s) == null){
+            this.datos1.add(new RowWithLabel(l, labelsToIndex.size()));
         }
     }
 
