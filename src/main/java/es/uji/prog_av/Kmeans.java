@@ -40,10 +40,10 @@ public class Kmeans {
 
     private List<Integer> asignarAGrupos(Table datos){
         List<Integer> res = new ArrayList<>();
-        double minDistance = Double.MAX_VALUE;
         int indice = -1;
 
         for(int i = 0; i < datos.n_filas(); i++){
+            double minDistance = Double.MAX_VALUE;
             for(int j = 0; j< centroids.size(); j++){
                 double distancia = distance(datos.getRowAt(i).getData(), centroids.get(j).getData());
                 if(distancia < minDistance){
