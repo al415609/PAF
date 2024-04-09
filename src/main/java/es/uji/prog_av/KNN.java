@@ -3,16 +3,19 @@ package es.uji.prog_av;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KNN implements Algorithm<TableWithLabels>{
+public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
 
     private TableWithLabels datos;
     private Double minimo;
     private int r1;
+
+    @Override
     public void train(TableWithLabels data){
         this.datos = data;
     }
 
-   public int estimate(List<Double> data){
+    @Override
+   public Integer estimate(List<Double> data){
         double c;
         minimo = 100D;
         for(int i = 0; i<datos.n_filas(); i++){

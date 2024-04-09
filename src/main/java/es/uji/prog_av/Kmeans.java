@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Kmeans implements Algorithm<Table>{
+public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
     private List<Row> centroids;
     private int numClusters;
     private int numIterations;
@@ -20,7 +20,7 @@ public class Kmeans implements Algorithm<Table>{
     @Override
     public void train(Table datos) throws InvalidNumberOfClustersException{
         if(numClusters > datos.n_filas()){
-            throw new InvalidNumberOfClustersException("El numero de clusters indicado es superior al tamaño de la muestra de datos");
+            throw new InvalidNumberOfClustersException("El numero de clusters indicado: " + numClusters + " es superior al tamaño de la muestra de datos" + datos.n_filas());
         }
         seleccionarPrototiposIniciales(datos);
         List<Integer> asignaciones;
@@ -30,7 +30,7 @@ public class Kmeans implements Algorithm<Table>{
         }
     }
     @Override
-    public int estimate(List<Double> dato){
+    public Integer estimate(List<Double> dato){
         double suma = 0;
 
         for(double d: dato){
