@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Kmeans {
+public class Kmeans implements Algorithm<Table>{
     private List<Row> centroids;
     private int numClusters;
     private int numIterations;
@@ -16,7 +16,12 @@ public class Kmeans {
         this.random = new Random(seed);
         this.centroids = new ArrayList<>();
     }
-    public void train(Table datos){
+
+    @Override
+    public void train(Table datos) throws InvalidNumberOfClustersException{
+        if(numClusters > datos.n_filas()){
+            throw new InvalidNumberOfClustersException("El numero de clusters indicado es superior al tamaño de la muestra de datos");
+        }
         seleccionarPrototiposIniciales(datos);
         List<Integer> asignaciones;
         for(int i = 0; i<numIterations; i++){
@@ -24,7 +29,15 @@ public class Kmeans {
             calcularCentroides(datos, asignaciones);
         }
     }
+    @Override
     public int estimate(List<Double> dato){
+        double suma = 0;
+
+        for(double d: dato){
+            suma += d;
+        }
+        return (int) Math.round(suma);
+
 
     }
     private void seleccionarPrototiposIniciales(Table datos){
@@ -57,10 +70,34 @@ public class Kmeans {
     }
 
     private void calcularCentroides(Table datos, List<Integer> asignaciones){
-        List<Integer> newClusters = new ArrayList<>();
+        List<Row> newClusters = new ArrayList<>();
+        List<Double> total = new ArrayList<>();
+        List<Double> res = new ArrayList<>();
+        int tamaño = 0;
 
-
+        for(int i = 0; i < numClusters; i++){
+            for(int j = 0; j < asignaciones.size(); j++){
+                if(i == asignaciones.get(j)){
+                    total = suma(datos.getRowAt(j).getData(), total);
+                    tamaño++;
+                }
+            }
+            for(int k = 0; k < total.size(); k++){
+                res.add(total.get(k) / tamaño);
+            }
+            newClusters.add(new Row(res));
+        }
+        centroids = newClusters;
     }
+
+    private List<Double> suma(List<Double> data, List<Double> total) {
+        List<Double> res = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++){
+            res.add(total.get(i) + data.get(i));
+        }
+        return res;
+    }
+
     public double distance(List<Double> d1, List<Double> d2){
         double res = 0;
         for(int i = 0; i < d1.size(); i++){

@@ -3,7 +3,7 @@ package es.uji.prog_av;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KNN {
+public class KNN implements Algorithm<TableWithLabels>{
 
     private TableWithLabels datos;
     private Double minimo;
