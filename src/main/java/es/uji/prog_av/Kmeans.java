@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
     private List<Row> centroids;
+    private List<Integer> asignaciones;
     private int numClusters;
     private int numIterations;
     private Random random;
@@ -15,6 +16,7 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
         this.numIterations = numIterations;
         this.random = new Random(seed);
         this.centroids = new ArrayList<>();
+        this.asignaciones = new ArrayList<>();
     }
 
     @Override
@@ -23,7 +25,6 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
             throw new InvalidNumberOfClustersException("El numero de clusters indicado: " + numClusters + " es superior al tamaño de la muestra de datos" + datos.n_filas());
         }
         seleccionarPrototiposIniciales(datos);
-        List<Integer> asignaciones;
         for(int i = 0; i<numIterations; i++){
             asignaciones = asignarAGrupos(datos);
             calcularCentroides(datos, asignaciones);
@@ -31,14 +32,16 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
     }
     @Override
     public Integer estimate(List<Double> dato){
-        double suma = 0;
+        double distancia_min = Double.MAX_VALUE;
+        int index = -1;
 
-        for(double d: dato){
-            suma += d;
+        for(int i = 0; i < centroids.size(); i++){
+            if(distancia_min > distance(centroids.get(i).getData(),dato)){
+                distancia_min = distance(centroids.get(i).getData(),dato);
+                index = i;
+            }
         }
-        return (int) Math.round(suma);
-
-
+        return index;
     }
     private void seleccionarPrototiposIniciales(Table datos){
         List<Integer> indices = new ArrayList<>();
@@ -75,6 +78,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
         List<Double> res = new ArrayList<>();
         int tamaño = 0;
 
+        total.add(0.0);
+        total.add(0.0);
+
         for(int i = 0; i < numClusters; i++){
             for(int j = 0; j < asignaciones.size(); j++){
                 if(i == asignaciones.get(j)){
@@ -104,5 +110,8 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
             res += Math.pow((d1.get(i)-d2.get(i)), 2);
         }
         return Math.sqrt(res);
+    }
+    public List<Integer> getAsignaciones(){
+        return this.asignaciones;
     }
 }

@@ -3,7 +3,6 @@ package es.uji.prog_av;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

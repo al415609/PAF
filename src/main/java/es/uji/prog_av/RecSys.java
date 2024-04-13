@@ -23,13 +23,14 @@ public class RecSys{
             estimates.add((int) algorithm.estimate(testData.getRowAt(i).getData()));
         }
     }
-    public List<String> recommend(String namedLinkedItem, int numRecommendations){
-        if(testItemNames.contains(namedLinkedItem)){
-            int idx = findName(namedLinkedItem);
-            int lbl = estimates.get(idx);
-            selecItems(idx, lbl, numRecommendations);
-            return getNamesSelectedItems();
+    public List<String> recommend(String namedLinkedItem, int numRecommendations) throws InvalidNameLikedItem {
+        if(!testItemNames.contains(namedLinkedItem)){
+            throw new InvalidNameLikedItem(namedLinkedItem + "no se encuentra en la lista para recomendar.");
         }
+        int idx = findName(namedLinkedItem);
+        int lbl = estimates.get(idx);
+        selecItems(idx, lbl, numRecommendations);
+        return getNamesSelectedItems();
     }
 
     private int findName(String nameItem){
