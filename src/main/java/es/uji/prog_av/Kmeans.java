@@ -55,7 +55,8 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
     }
 
     private List<Integer> asignarAGrupos(Table datos){
-        List<Integer> res = new ArrayList<>();
+        int size = datos.n_filas();
+        List<Integer> res = new ArrayList<>(Collections.nCopies(size, 0));
         int indice = -1;
 
         for(int i = 0; i < datos.n_filas(); i++){
@@ -67,21 +68,20 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
                     indice = j;
                 }
             }
-            res.add(indice);
+            res.set(i, indice);
         }
         return res;
     }
 
     private void calcularCentroides(Table datos, List<Integer> asignaciones){
         List<Row> newClusters = new ArrayList<>();
-        List<Double> total = new ArrayList<>();
-        List<Double> res = new ArrayList<>();
+
         int tamaño = 0;
 
-        total.add(0.0);
-        total.add(0.0);
 
         for(int i = 0; i < numClusters; i++){
+            List<Double> res = new ArrayList<>();
+            List<Double> total = new ArrayList<>(Collections.nCopies(2,0.0));
             for(int j = 0; j < asignaciones.size(); j++){
                 if(i == asignaciones.get(j)){
                     total = suma(datos.getRowAt(j).getData(), total);
@@ -92,6 +92,7 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
                 res.add(total.get(k) / tamaño);
             }
             newClusters.add(new Row(res));
+            tamaño = 0;
         }
         centroids = newClusters;
     }
