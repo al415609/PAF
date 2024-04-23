@@ -11,12 +11,14 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
     private int numClusters;
     private int numIterations;
     private Random random;
-    public Kmeans(int numClusters, int numIterations, long seed){
+    private Distance distance;
+    public Kmeans(int numClusters, int numIterations, long seed, Distance distance){
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.random = new Random(seed);
         this.centroids = new ArrayList<>();
         this.asignaciones = new ArrayList<>();
+        this.distance = distance;
     }
 
     @Override
@@ -36,8 +38,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
         int index = -1;
 
         for(int i = 0; i < centroids.size(); i++){
-            if(distancia_min > distance(centroids.get(i).getData(),dato)){
-                distancia_min = distance(centroids.get(i).getData(),dato);
+            double distancia_teoria = distance(centroids.get(i).getData(),dato);
+            if(distancia_min > distancia_teoria){
+                distancia_min = distancia_teoria;
                 index = i;
             }
         }
@@ -78,10 +81,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
 
         int tamaño = 0;
 
-
         for(int i = 0; i < numClusters; i++){
-            List<Double> res = new ArrayList<>();
-            List<Double> total = new ArrayList<>(Collections.nCopies(2,0.0));
+            List<Double> nuevo_Centroide = new ArrayList<>();
+            List<Double> total = new ArrayList<>(Collections.nCopies(datos.n_columnas(),0.0));
             for(int j = 0; j < asignaciones.size(); j++){
                 if(i == asignaciones.get(j)){
                     total = suma(datos.getRowAt(j).getData(), total);
@@ -89,9 +91,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
                 }
             }
             for(int k = 0; k < total.size(); k++){
-                res.add(total.get(k) / tamaño);
+                nuevo_Centroide.add(total.get(k) / tamaño);
             }
-            newClusters.add(new Row(res));
+            newClusters.add(new Row(nuevo_Centroide));
             tamaño = 0;
         }
         centroids = newClusters;
@@ -105,13 +107,10 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
         return res;
     }
 
-    public double distance(List<Double> d1, List<Double> d2){
-        double res = 0;
-        for(int i = 0; i < d1.size(); i++){
-            res += Math.pow((d1.get(i)-d2.get(i)), 2);
-        }
-        return Math.sqrt(res);
+    private double distance(List<Double> L1, List<Double> L2){
+        return distance.calculateDistance(L1, L2);
     }
+
     public List<Integer> getAsignaciones(){
         return this.asignaciones;
     }

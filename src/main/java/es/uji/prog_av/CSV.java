@@ -26,6 +26,7 @@ public class CSV {
                 t.addRow(row);
             }
         }
+        br.close();
         return t;
     }
 
@@ -51,6 +52,7 @@ public class CSV {
             }
 
         }
+        br1.close();
         return t1;
     }
 }

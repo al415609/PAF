@@ -8,14 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class KmeansTest {
 
-    CSV r = new CSV();
+
+    private Distance distance = new EuclideanDistance();
     long seed = 1234567891011121314L;
     String separator = System.getProperty("file.separator");
-    String fileName = "src" + separator + "main" + separator + "resources" + separator + "test.csv";
+    String fileName = "src" + separator + "main" + separator + "resources" + separator + "miles_dollars.csv";
     @Test
     void train() throws IOException, InvalidNumberOfClustersException {
-        Table t = r.readTable(fileName);
-        Kmeans s = new Kmeans(3,100,seed);
+        ReaderTemplate r = new CSVUnlabeledFileReader(fileName);
+        Table t = r.readTableFromSource();
+        Kmeans s = new Kmeans(3,100,seed, distance);
         s.train(t);
         assertEquals(s.estimate(t.getRowAt(0).getData()), s.getAsignaciones().get(0));
         assertEquals(s.estimate(t.getRowAt(1).getData()), s.getAsignaciones().get(1));
@@ -29,7 +31,7 @@ class KmeansTest {
         assertEquals(s.estimate(t.getRowAt(9).getData()), s.getAsignaciones().get(9));
         assertEquals(s.estimate(t.getRowAt(10).getData()), s.getAsignaciones().get(10));
 
-        Kmeans r = new Kmeans(19,100,seed);
-        assertThrows(InvalidNumberOfClustersException.class, () -> {r.train(t);});
+        Kmeans k1 = new Kmeans(40,100,seed, distance);
+        assertThrows(InvalidNumberOfClustersException.class, () -> {k1.train(t);});
     }
 }

@@ -8,6 +8,11 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
     private TableWithLabels datos;
     private Double minimo;
     private int r1;
+    private Distance distance;
+
+    public KNN(Distance distance){
+        this.distance = distance;
+    }
 
     @Override
     public void train(TableWithLabels data){
@@ -29,10 +34,6 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
    }
 
    public double distance(List<Double> d1, List<Double> d2){
-        double res = 0;
-        for(int i = 0; i < d1.size(); i++){
-            res += Math.pow((d1.get(i)-d2.get(i)), 2);
-        }
-        return Math.sqrt(res);
+       return distance.calculateDistance(d1, d2);
    }
 }
