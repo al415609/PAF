@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
+public class KMeans implements Algorithm<Table, Integer, List<Double>>{
     private List<Row> centroids;
     private List<Integer> asignaciones;
     private int numClusters;
     private int numIterations;
     private Random random;
     private Distance distance;
-    public Kmeans(int numClusters, int numIterations, long seed, Distance distance){
+    public KMeans(int numClusters, int numIterations, long seed, Distance distance){
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.random = new Random(seed);
@@ -107,7 +107,7 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
         return res;
     }
 
-    private double distance(List<Double> L1, List<Double> L2){
+    public double distance(List<Double> L1, List<Double> L2){
         return distance.calculateDistance(L1, L2);
     }
 

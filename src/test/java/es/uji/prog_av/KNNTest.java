@@ -52,4 +52,32 @@ class KNNTest {
         assertEquals(11, s.estimate(l2), "Error en la funcion estimate");
         assertEquals(9, s.estimate(l3), "Error en la funcion estimate");
     }
+
+    @Test
+    void distance() throws IOException {
+        KNN s = new KNN(distance);
+        List<Double> l1 = new ArrayList<>();
+        l1.add(1.5);
+        l1.add(2.3);
+        l1.add(3.8);
+        l1.add(4.1);
+        List<Double> l2 = new ArrayList<>();
+        l2.add(2.7);
+        l2.add(3.9);
+        l2.add(1.2);
+        l2.add(5.6);
+        assertEquals(6.9D, s.distance(l1,l2));
+        List<Double> l3 = new ArrayList<>();
+        l3.add(5.1);
+        l3.add(3.5);
+        l3.add(1.4);
+        l3.add(0.2);
+        List<Double> l4 = new ArrayList<>();
+        l4.add(4.9);
+        l4.add(3.0);
+        l4.add(1.4);
+        l4.add(0.2);
+        System.out.println(s.distance(l3,l4));
+        assertEquals(0.7D,  Double.parseDouble(String.format(Locale.US,"%.3f",s.distance(l3,l4))));
+    }
 }
