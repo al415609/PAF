@@ -11,7 +11,7 @@ public class CSVLabeledFileReader extends CSVUnlabeledFileReader{
         this.tabla = new TableWithLabels();
     }
     void processData(String data) throws IOException {
-        String[] s = br.readLine().split(",");
+        String[] s = data.split(",");
         List<Double> rowWithL = new ArrayList<>();
         for(int i = 0; i < s.length -1; i++)
             rowWithL.add(Double.parseDouble(s[i]));

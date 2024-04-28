@@ -48,9 +48,9 @@ class KNNTest {
         l4.add(1.4);
         l4.add(0.2);
         assertEquals(String.format(Locale.US, "%.3f", d1), String.format(Locale.US, "%.3f",s.distance(l3, l4)), "Fallo en el calculo de la distancia");
-        assertEquals(30, s.estimate(l1), "Error en la funcion estimate");
-        assertEquals(11, s.estimate(l2), "Error en la funcion estimate");
-        assertEquals(9, s.estimate(l3), "Error en la funcion estimate");
+        assertEquals(107, s.estimate(l1), "Error en la funcion estimate");
+        assertEquals(23, s.estimate(l2), "Error en la funcion estimate");
+        assertEquals(1, s.estimate(l3), "Error en la funcion estimate");
     }
 
     @Test
@@ -77,7 +77,6 @@ class KNNTest {
         l4.add(3.0);
         l4.add(1.4);
         l4.add(0.2);
-        System.out.println(s.distance(l3,l4));
         assertEquals(0.7D,  Double.parseDouble(String.format(Locale.US,"%.3f",s.distance(l3,l4))));
     }
 }

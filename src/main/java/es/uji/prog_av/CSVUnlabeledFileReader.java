@@ -23,7 +23,9 @@ public class CSVUnlabeledFileReader extends ReaderTemplate{
 
     @Override
     void processHeaders(String headers) throws IOException {
-        tabla.addHeader(headers);
+        String[] s = headers.split(",");
+        for(String s1 : s)
+            tabla.addHeader(s1);
     }
 
     @Override
