@@ -26,10 +26,11 @@ public class CSV {
                 t.addRow(row);
             }
         }
+        br.close();
         return t;
     }
 
-    public TableWithLabels readTableWithLabels(String fileName) throws IOException {
+    public TableWithLabels readTableWithLabel(String fileName) throws IOException {
         TableWithLabels t1 = new TableWithLabels();
         BufferedReader br1 = new BufferedReader(new FileReader(new File(fileName)));
         String line;
@@ -51,6 +52,7 @@ public class CSV {
             }
 
         }
+        br1.close();
         return t1;
     }
 }

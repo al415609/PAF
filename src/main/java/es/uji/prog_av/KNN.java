@@ -1,28 +1,27 @@
 package es.uji.prog_av;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
 
-    private TableWithLabels datos;
+    private TableWithLabels tableWithLabels;
     private Double minimo;
     private int r1;
 
     @Override
     public void train(TableWithLabels data){
-        this.datos = data;
+        this.tableWithLabels = data;
     }
 
     @Override
    public Integer estimate(List<Double> data){
         double c;
-        minimo = 100D;
-        for(int i = 0; i<datos.n_filas(); i++){
-            c = distance(datos.getRowAt(i).getData(), data);
+        minimo = Double.MAX_VALUE;
+        for(int i = 0; i< tableWithLabels.n_filas(); i++){
+            c = distance(tableWithLabels.getRowAt(i).getData(), data);
             if(c < minimo){
                 minimo = c;
-                r1 = datos.getRowAt(i).getNumberClass();
+                r1 = tableWithLabels.getRowAt(i).getNumberClass();
             }
         }
         return r1;

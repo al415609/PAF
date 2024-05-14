@@ -1,6 +1,5 @@
 package es.uji.prog_av;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ class CSVTest {
     void readTableWithLabels() throws IOException {
         System.out.println("Test de los métodos con el archivo iris.csv");
         System.out.println(" ");
-        TableWithLabels t = r.readTableWithLabels(fileName1);
+        TableWithLabels t = r.readTableWithLabel(fileName1);
         List<String> l = new ArrayList<>();
         l.add("sepal length");
         l.add("sepal width");

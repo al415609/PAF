@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
+public class KMeans implements Algorithm<Table, Integer, List<Double>>{
     private List<Row> centroids;
     private List<Integer> asignaciones;
     private int numClusters;
     private int numIterations;
     private Random random;
-    public Kmeans(int numClusters, int numIterations, long seed){
+    public KMeans(int numClusters, int numIterations, long seed){
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.random = new Random(seed);
@@ -36,8 +36,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
         int index = -1;
 
         for(int i = 0; i < centroids.size(); i++){
-            if(distancia_min > distance(centroids.get(i).getData(),dato)){
-                distancia_min = distance(centroids.get(i).getData(),dato);
+            double distancia_actual = distance(centroids.get(i).getData(), dato);
+            if(distancia_min > distancia_actual){
+                distancia_min = distancia_actual;
                 index = i;
             }
         }
@@ -78,10 +79,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
 
         int tamaño = 0;
 
-
         for(int i = 0; i < numClusters; i++){
-            List<Double> res = new ArrayList<>();
-            List<Double> total = new ArrayList<>(Collections.nCopies(2,0.0));
+            List<Double> nuevo_Centroide = new ArrayList<>();
+            List<Double> total = new ArrayList<>(Collections.nCopies(datos.n_columnas(),0.0));
             for(int j = 0; j < asignaciones.size(); j++){
                 if(i == asignaciones.get(j)){
                     total = suma(datos.getRowAt(j).getData(), total);
@@ -89,9 +89,9 @@ public class Kmeans implements Algorithm<Table, Integer, List<Double>>{
                 }
             }
             for(int k = 0; k < total.size(); k++){
-                res.add(total.get(k) / tamaño);
+                nuevo_Centroide.add(total.get(k) / tamaño);
             }
-            newClusters.add(new Row(res));
+            newClusters.add(new Row(nuevo_Centroide));
             tamaño = 0;
         }
         centroids = newClusters;

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class KmeansTest {
+class KMeansTest {
 
     CSV r = new CSV();
     long seed = 1234567891011121314L;
@@ -15,7 +15,7 @@ class KmeansTest {
     @Test
     void train() throws IOException, InvalidNumberOfClustersException {
         Table t = r.readTable(fileName);
-        Kmeans s = new Kmeans(3,100,seed);
+        KMeans s = new KMeans(3,100,seed);
         s.train(t);
         assertEquals(s.estimate(t.getRowAt(0).getData()), s.getAsignaciones().get(0));
         assertEquals(s.estimate(t.getRowAt(1).getData()), s.getAsignaciones().get(1));
@@ -29,7 +29,7 @@ class KmeansTest {
         assertEquals(s.estimate(t.getRowAt(9).getData()), s.getAsignaciones().get(9));
         assertEquals(s.estimate(t.getRowAt(10).getData()), s.getAsignaciones().get(10));
 
-        Kmeans r = new Kmeans(19,100,seed);
+        KMeans r = new KMeans(19,100,seed);
         assertThrows(InvalidNumberOfClustersException.class, () -> {r.train(t);});
     }
 }
