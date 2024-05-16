@@ -6,26 +6,31 @@ import java.util.List;
 import java.util.Map;
 
 public class TableWithLabels extends Table{
-    private Map<Integer, String> labelsToIndex = new HashMap<>();
-    private List<RowWithLabel> datos1 = new ArrayList<>();
+    private Map<String, Integer> labelsToIndex = new HashMap<>();
+    private List<RowWithLabel> datosFilas = new ArrayList<>();
 
-    public void addRowWithLabels(List<Double> l, String s){
-        if(this.labelsToIndex.put(labelsToIndex.size(),s) == null){
-            this.datos1.add(new RowWithLabel(l, labelsToIndex.size()));
+    public void addRowWithLabels(List<Double> datos, String etiqueta){
+        int etiquetaInt = 0;
+        if(labelsToIndex.containsKey(etiqueta)){
+            etiquetaInt = labelsToIndex.get(etiqueta);
+        } else {
+            etiquetaInt = labelsToIndex.size();
+            labelsToIndex.put(etiqueta, etiquetaInt);
         }
+        this.datosFilas.add(new RowWithLabel(datos, etiquetaInt));
     }
 
     @Override
     public int n_filas() {
-        return datos1.size();
+        return datosFilas.size();
     }
     @Override
     public int n_columnas(){
-        return datos1.get(1).tamaño() + 1;
+        return datosFilas.get(1).tamaño() + 1;
     }
 
     public RowWithLabel getRowAt(int rowNumber){
-        return datos1.get(rowNumber);
+        return datosFilas.get(rowNumber);
     }
 
 }
